@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="client_button_clicked">#FF0000</color>
+    <color name="worker_button_unclicked">#00FF00</color>
+    <color name="worker_button_clicked">#0000FF</color>
+    <color name="client_button_unclicked">#FFFF00</color>
+    <color name="recommended_worker_bg">#FFE0B2</color> <!-- Light orange background for recommended workers -->
+    <color name="default_worker_bg">#FFFFFF</color> <!-- Default white background -->
+    <color name="clientColor">#FF9800</color>
+    <color name="workerColor">#3F51B5</color>
+    <color name="adminColor">#4CAF50</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#E6DBDB</color>
+    <color name="pink">#FFE31A1A</color>
+    <color name="primaryColor">#6200EE</color>
+    <color name="secondaryTextColor">#757575</color>
+
+
+    <color name="lightGray">#D3D3D3</color>
+    <color name="selectedText">#FF0000</color>
+    <color name="defaultText">#000000</color>
+    <color name="colorAccent">#FF4081</color>
+
+
+
+    <color name="my_primary">#8E24AA</color>
+    <color name="my_secondary">#9C27B0</color>
+</resources>

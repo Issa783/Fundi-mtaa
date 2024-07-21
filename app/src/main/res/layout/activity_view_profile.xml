@@ -1,0 +1,153 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@color/white">
+
+    <!-- Profile Picture -->
+    <ImageView
+        android:id="@+id/profilePicture"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        android:contentDescription="Profile Picture"
+        android:background="@drawable/circle_shape"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_marginTop="16dp" />
+
+    <!-- Personal Information -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewProfileInfo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/profilePicture"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Fieldset: Personal Information -->
+            <TextView
+                android:id="@+id/textViewPersonalInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Personal Information"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginBottom="8dp"/>
+
+            <!-- Name -->
+            <TextView
+                android:id="@+id/textViewName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Name: John Doe"
+                android:textSize="16sp" />
+
+            <!-- Email -->
+            <TextView
+                android:id="@+id/textViewEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Email: johndoe@example.com"
+                android:textSize="16sp" />
+
+            <!-- Phone Number -->
+            <TextView
+                android:id="@+id/textViewPhoneNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Phone Number: +123456789"
+                android:textSize="16sp" />
+
+            <!-- Location -->
+            <TextView
+                android:id="@+id/textViewLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Location: Nairobi, Kenya"
+                android:textSize="16sp" />
+
+            <!-- Work Experience -->
+            <TextView
+                android:id="@+id/textViewExperience"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Work Experience: 3 years"
+                android:textSize="16sp" />
+
+            <!-- Specialization -->
+            <TextView
+                android:id="@+id/textViewSpecialization"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Specialization: Plumbing"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Ratings and Reviews -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewRatingsReviews"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/cardViewProfileInfo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Average Rating -->
+            <TextView
+                android:id="@+id/textViewAverageRating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Average Rating: N/A"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"/>
+
+            <!-- Ratings and Reviews List -->
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:fillViewport="true">
+
+                <LinearLayout
+                    android:id="@+id/layoutRatingsReviews"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"/>
+            </ScrollView>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

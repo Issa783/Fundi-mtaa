@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="4dp"
+    android:layout_marginTop="8dp"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textViewName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textViewDateOfApplication"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/textViewExperience"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/textViewAssignedJobs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp" />
+
+        <!-- Recommended Tag -->
+        <TextView
+            android:id="@+id/textViewRecommended"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Recommended"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorAccent"
+            android:visibility="gone"
+            android:layout_marginTop="4dp" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/textViewAvailable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Available"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorAccent"
+                android:visibility="gone"
+                android:layout_marginTop="4dp" />
+
+            <ImageView
+                android:id="@+id/indicatorAvailable"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:src="@drawable/circle_red"
+                android:visibility="gone"
+                android:layout_marginStart="2dp"
+                android:contentDescription="Available Indicator" />
+        </LinearLayout>
+
+        <!-- Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="8dp">
+
+            <Button
+                android:id="@+id/buttonViewProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="View Profile" />
+
+            <Button
+                android:id="@+id/buttonAssignJob"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Assign Job" />
+            <Button
+                android:id="@+id/buttonRejectJob"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Reject Job"/>
+            <Button
+                android:id="@+id/buttonCancelJob"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cancel Job"
+             />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

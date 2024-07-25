@@ -1,0 +1,4 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/read_notification_bg" android:state_checked="true"/> <!-- Read -->
+    <item android:drawable="@color/unread_notification_bg"/> <!-- Unread -->
+</selector>

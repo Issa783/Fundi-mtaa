@@ -70,6 +70,7 @@ public class WorkerApplicationJobHistory extends AppCompatActivity {
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
                         // Client details exist in the AssignedJobs document
+                        String clientId = documentSnapshot.getString("clientId");
                         String clientName = documentSnapshot.getString("clientName");
                         String clientEmail = documentSnapshot.getString("clientEmail");
                         String clientPhoneNumber = documentSnapshot.getString("clientPhoneNumber");
@@ -77,6 +78,7 @@ public class WorkerApplicationJobHistory extends AppCompatActivity {
 
                         // Pass client details to a new activity or dialog
                         Intent intent = new Intent(WorkerApplicationJobHistory.this, ViewClientProfileActivity.class);
+                        intent.putExtra("clientId", clientId);
                         intent.putExtra("clientName", clientName);
                         intent.putExtra("clientEmail", clientEmail);
                         intent.putExtra("clientPhoneNumber", clientPhoneNumber);

@@ -6,6 +6,20 @@
     android:padding="16dp"
     android:background="@color/white">
 
+    <!-- Toolbar with Back Arrow -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:title="Update Profile"
+        app:navigationIcon="@drawable/ic_backarrow"/>
+
     <!-- Profile Picture -->
     <ImageView
         android:id="@+id/profilePicture"
@@ -14,7 +28,7 @@
         android:scaleType="centerCrop"
         android:contentDescription="Profile Picture"
         android:background="@drawable/circle_shape"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -150,6 +164,7 @@
             </ScrollView>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
     <!-- Update Profile Button -->
     <Button
         android:id="@+id/btnUpdateProfile"

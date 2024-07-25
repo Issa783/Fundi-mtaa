@@ -3,6 +3,7 @@ package com.example.fundimtaa;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -10,11 +11,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,6 +39,7 @@ public class WorkerProfileActivity extends AppCompatActivity {
     private ImageView profilePicture;
     private TextView textViewAverageRating;
     private List<QueryDocumentSnapshot> jobReviewsList = new ArrayList<>();
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,11 @@ public class WorkerProfileActivity extends AppCompatActivity {
         layoutRatingsReviews = findViewById(R.id.layoutRatingsReviews);
         btnUpdateProfile = findViewById(R.id.btnUpdateProfile);
         textViewAverageRating = findViewById(R.id.textViewAverageRating);
+
+        // Initialize UI elements
+       toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         btnUpdateProfile.setOnClickListener(v -> {
             Intent intent = new Intent(WorkerProfileActivity.this, UpdateProfileActivity.class);
@@ -64,6 +72,16 @@ public class WorkerProfileActivity extends AppCompatActivity {
 
         applyFadeInAnimation(textViewAverageRating);
         applyFadeInAnimation(btnUpdateProfile);
+    }
+
+    // Handle back arrow click
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish(); // Close this activity and go back to the previous one
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void applyFadeInAnimation(View view) {
@@ -111,7 +129,7 @@ public class WorkerProfileActivity extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("RatingsAndReviews")
                 .whereEqualTo("workerId", workerId)
-                .orderBy("timestamp", com.google.firebase.firestore.Query.Direction.DESCENDING) // Sort by timestamp in descending order
+              //  .orderBy("timestamp", com.google.firebase.firestore.Query.Direction.DESCENDING) // Sort by timestamp in descending order
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {

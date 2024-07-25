@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,6 +24,7 @@ public class UpdateClientProfileActivity extends AppCompatActivity {
 
     private FirebaseFirestore db;
     private ProgressDialog progressDialog;
+    private ImageView backArrow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,13 @@ public class UpdateClientProfileActivity extends AppCompatActivity {
 
         // Find the "Save Profile" button
         btnSaveProfile = findViewById(R.id.btnSaveProfile);
+        backArrow = findViewById(R.id.backArrow);
+        backArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish(); // Go back to the previous activity
+            }
+        });
         // Initialize the ProgressDialog
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Updating profile...");

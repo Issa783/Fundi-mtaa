@@ -1,69 +1,88 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white">
 
-    <!-- Worker's Profile Information -->
+    <!-- Back arrow -->
+    <ImageView
+        android:id="@+id/imageViewBackArrow"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_backarrow"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp" />
+
+
+    <TextView
+        android:id="@+id/textViewPersonalInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Personal Information"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp" />
+
+
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardViewProfileInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/textViewPersonalInfo"
         android:layout_margin="16dp"
-        android:elevation="4dp"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:padding="16dp">
+        app:cardCornerRadius="16dp"
+        app:cardElevation="8dp">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
 
-            <!-- Fieldset: Personal Information -->
-            <TextView
-                android:id="@+id/textViewPersonalInfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Personal Information"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:layout_marginBottom="8dp"/>
 
-            <!-- Name -->
             <TextView
                 android:id="@+id/textViewClientName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Name: "
-                android:layout_below="@id/textViewPersonalInfo"
-                android:layout_marginTop="8dp"/>
-            <!-- Name -->
+                android:text="Client Name: "
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/primaryColor"/>
+
+
             <TextView
                 android:id="@+id/textViewClientEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Email: "
-                android:layout_below="@id/textViewClientName"
+                android:text="Client Email: "
+                android:textSize="18sp"
+                android:textColor="@color/secondaryTextColor"
                 android:layout_marginTop="8dp"/>
 
 
-            <!-- Phone Number -->
             <TextView
                 android:id="@+id/textViewClientPhoneNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Phone Number: "
-                android:layout_below="@id/textViewClientEmail"
+                android:text="Client PhoneNumber: "
+                android:textSize="18sp"
+                android:textColor="@color/secondaryTextColor"
                 android:layout_marginTop="8dp"/>
 
-            <!-- Location -->
+
             <TextView
                 android:id="@+id/textViewClientLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Location: "
-                android:layout_below="@id/textViewClientPhoneNumber"
+                android:textSize="18sp"
+                android:textColor="@color/secondaryTextColor"
                 android:layout_marginTop="8dp"/>
 
+        </LinearLayout>
 
-
-        </RelativeLayout>
     </androidx.cardview.widget.CardView>
+
 </RelativeLayout>

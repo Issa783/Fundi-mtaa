@@ -61,6 +61,8 @@
                     android:id="@+id/editTextJobName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:padding="12dp"
+                    android:background="@drawable/rounded_edit_text"
                     android:hint="Enter job name"
                     android:inputType="text" />
             </LinearLayout>
@@ -83,6 +85,8 @@
                     android:id="@+id/editTextJobStartDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:padding="12dp"
+                    android:background="@drawable/rounded_edit_text"
                     android:hint="Enter start date"
                     android:inputType="date" />
             </LinearLayout>
@@ -105,6 +109,8 @@
                     android:id="@+id/editTextJobDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:padding="12dp"
+                    android:background="@drawable/rounded_edit_text"
                     android:hint="Enter job description"
                     android:inputType="textMultiLine"
                     android:minLines="3" />
@@ -128,6 +134,8 @@
                     android:id="@+id/editTextMinExperience"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:padding="12dp"
+                    android:background="@drawable/rounded_edit_text"
                     android:hint="Enter minimum experience"
                     android:inputType="text" />
             </LinearLayout>
@@ -150,6 +158,8 @@
                     android:id="@+id/editTextLocation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:padding="12dp"
+                    android:background="@drawable/rounded_edit_text"
                     android:hint="Enter location"
                     android:inputType="text" />
             </LinearLayout>
@@ -172,6 +182,8 @@
                     android:id="@+id/editTextPrice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:padding="12dp"
+                    android:background="@drawable/rounded_edit_text"
                     android:hint="Enter price"
                     android:inputType="text" />
             </LinearLayout>
@@ -191,3 +203,4 @@
     </com.google.android.material.card.MaterialCardView>
 
 </RelativeLayout>
+

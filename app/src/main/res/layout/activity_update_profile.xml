@@ -1,84 +1,176 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardViewProfileUpdate"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:elevation="4dp"
-        android:foreground="?android:attr/selectableItemBackground"
         android:padding="16dp">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-        <!-- Name -->
-        <EditText
-            android:id="@+id/editTextName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Name"
-            android:inputType="textPersonName" />
-
-        <!-- Email -->
-        <EditText
-            android:id="@+id/editTextEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/editTextName"
+        <!-- Back Arrow -->
+        <ImageView
+            android:id="@+id/backArrow"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentStart="true"
             android:layout_marginTop="16dp"
-            android:hint="Email"
-            android:inputType="textEmailAddress" />
+            android:layout_marginStart="16dp"
+            android:src="@drawable/ic_backarrow"
+            android:contentDescription="Back" />
 
-        <!-- Phone Number -->
-        <EditText
-            android:id="@+id/editTextPhoneNumber"
+        <!-- Profile Update Card -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardViewProfileUpdate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/editTextEmail"
-            android:layout_marginTop="16dp"
-            android:hint="Phone Number"
-            android:inputType="phone" />
+            android:layout_below="@id/backArrow"
+            android:layout_marginTop="32dp"
+            android:elevation="6dp"
+            app:cardCornerRadius="12dp"
+            app:cardBackgroundColor="@android:color/white">
 
-        <!-- Location -->
-        <EditText
-            android:id="@+id/editTextLocation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/editTextPhoneNumber"
-            android:layout_marginTop="16dp"
-            android:hint="Location" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
 
-        <!-- Experience -->
-        <EditText
-            android:id="@+id/editTextExperience"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/editTextLocation"
-            android:layout_marginTop="16dp"
-            android:hint="Work Experience" />
+                <!-- Profile Picture -->
+                <ImageView
+                    android:id="@+id/imageViewProfilePicture"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/circle_shape"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_profile" />
 
-        <!-- Specialization -->
-        <EditText
-            android:id="@+id/editTextSpecialization"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/editTextExperience"
-            android:layout_marginTop="16dp"
-            android:hint="Specialization" />
+                <!-- Button: Upload Profile Picture -->
+                <Button
+                    android:id="@+id/btnUploadProfilePicture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/imageViewProfilePicture"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="16dp"
+                    android:backgroundTint="@color/primaryColor"
+                    android:elevation="4dp"
+                    android:padding="8dp"
+                    android:text="Upload Photo"
+                    android:textColor="@color/white" />
 
-        <!-- Button: Save Profile -->
-        <Button
-            android:id="@+id/btnSaveProfile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Save Profile"
-            android:layout_below="@id/editTextSpecialization"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"/>
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
-</RelativeLayout>
+                <!-- Name -->
+                <EditText
+                    android:id="@+id/editTextName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/btnUploadProfilePicture"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/rounded_edit_text"
+                    android:hint="Name"
+                    android:inputType="textPersonName"
+                    android:padding="12dp"
+                    android:textColor="@color/primaryTextColor"
+                    android:textColorHint="@color/secondaryTextColor" />
+
+                <!-- Email -->
+                <EditText
+                    android:id="@+id/editTextEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/editTextName"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/rounded_edit_text"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress"
+                    android:padding="12dp"
+                    android:textColor="@color/primaryTextColor"
+                    android:textColorHint="@color/secondaryTextColor" />
+
+                <!-- Phone Number -->
+                <EditText
+                    android:id="@+id/editTextPhoneNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/editTextEmail"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/rounded_edit_text"
+                    android:hint="Phone Number"
+                    android:inputType="phone"
+                    android:padding="12dp"
+                    android:textColor="@color/primaryTextColor"
+                    android:textColorHint="@color/secondaryTextColor" />
+
+                <!-- About -->
+                <EditText
+                    android:id="@+id/editTextAbout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/editTextPhoneNumber"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/rounded_edit_text"
+                    android:hint="About"
+                    android:inputType="textMultiLine"
+                    android:padding="12dp"
+                    android:textColor="@color/primaryTextColor"
+                    android:textColorHint="@color/secondaryTextColor" />
+
+                <!-- Location -->
+                <EditText
+                    android:id="@+id/editTextLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/editTextAbout"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/rounded_edit_text"
+                    android:hint="Location"
+                    android:padding="12dp"
+                    android:textColor="@color/primaryTextColor"
+                    android:textColorHint="@color/secondaryTextColor" />
+
+                <!-- Experience -->
+                <EditText
+                    android:id="@+id/editTextExperience"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/editTextLocation"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/rounded_edit_text"
+                    android:hint="Work Experience"
+                    android:padding="12dp"
+                    android:textColor="@color/primaryTextColor"
+                    android:textColorHint="@color/secondaryTextColor" />
+
+                <!-- Specialization -->
+                <EditText
+                    android:id="@+id/editTextSpecialization"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/editTextExperience"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/rounded_edit_text"
+                    android:hint="Specialization"
+                    android:padding="12dp"
+                    android:textColor="@color/primaryTextColor"
+                    android:textColorHint="@color/secondaryTextColor" />
+
+                <!-- Button: Save Profile -->
+                <Button
+                    android:id="@+id/btnSaveProfile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/editTextSpecialization"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="16dp"
+                    android:backgroundTint="@color/primaryColor"
+                    android:elevation="4dp"
+                    android:padding="12dp"
+                    android:text="Save Profile"
+                    android:textColor="@color/white" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+</ScrollView>

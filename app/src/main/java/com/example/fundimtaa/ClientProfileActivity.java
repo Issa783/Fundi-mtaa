@@ -33,6 +33,15 @@ public class ClientProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_profile);
+        ImageView imageViewBackArrow = findViewById(R.id.imageViewBackArrow);
+        imageViewBackArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Navigate back to the previous activity
+                onBackPressed();
+            }
+        });
+
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();

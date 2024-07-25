@@ -1,19 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="16dp">
 
+    <!-- Back Arrow -->
+    <ImageView
+        android:id="@+id/backArrow"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/ic_backarrow"
+        android:contentDescription="Back" />
+
+    <!-- Profile Update Card -->
     <androidx.cardview.widget.CardView
         android:id="@+id/cardViewProfileUpdate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:elevation="4dp"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:padding="16dp">
+        android:layout_below="@id/backArrow"
+        android:layout_marginTop="32dp"
+        android:elevation="6dp"
+        app:cardCornerRadius="12dp"
+        app:cardBackgroundColor="@android:color/white">
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
 
             <!-- Name -->
             <EditText
@@ -21,7 +39,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Name"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:padding="12dp"
+                android:background="@drawable/rounded_edit_text"
+                android:textColor="@color/primaryTextColor"
+                android:textColorHint="@color/secondaryTextColor"
+                android:layout_marginBottom="16dp" />
 
             <!-- Email -->
             <EditText
@@ -29,9 +52,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/editTextName"
-                android:layout_marginTop="16dp"
                 android:hint="Email"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:padding="12dp"
+                android:background="@drawable/rounded_edit_text"
+                android:textColor="@color/primaryTextColor"
+                android:textColorHint="@color/secondaryTextColor"
+                android:layout_marginBottom="16dp" />
 
             <!-- Phone Number -->
             <EditText
@@ -39,27 +66,40 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/editTextEmail"
-                android:layout_marginTop="16dp"
                 android:hint="Phone Number"
-                android:inputType="phone" />
+                android:inputType="phone"
+                android:padding="12dp"
+                android:background="@drawable/rounded_edit_text"
+                android:textColor="@color/primaryTextColor"
+                android:textColorHint="@color/secondaryTextColor"
+                android:layout_marginBottom="16dp" />
+            <!-- About -->
+            <EditText
+                android:id="@+id/editTextAbout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/editTextPhoneNumber"
+                android:hint="About"
+                android:padding="12dp"
+                android:inputType="textMultiLine"
+                android:background="@drawable/rounded_edit_text"
+                android:textColor="@color/primaryTextColor"
+                android:textColorHint="@color/secondaryTextColor"
+                android:layout_marginBottom="16dp" />
+
 
             <!-- Location -->
             <EditText
                 android:id="@+id/editTextLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/editTextPhoneNumber"
-                android:layout_marginTop="16dp"
-                android:hint="Location" />
-
-            <!-- Experience -->
-            <EditText
-                android:id="@+id/editTextAbout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/editTextLocation"
-                android:layout_marginTop="16dp"
-                android:hint="About" />
+                android:layout_below="@id/editTextAbout"
+                android:hint="Location"
+                android:padding="12dp"
+                android:background="@drawable/rounded_edit_text"
+                android:textColor="@color/primaryTextColor"
+                android:textColorHint="@color/secondaryTextColor"
+                android:layout_marginBottom="16dp" />
 
 
             <!-- Button: Save Profile -->
@@ -67,10 +107,14 @@
                 android:id="@+id/btnSaveProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Save Profile"
-                android:layout_below="@id/editTextAbout"
+                android:layout_below="@id/editTextLocation"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="16dp"/>
+                android:text="Save Profile"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/primaryColor"
+                android:padding="12dp"
+                android:elevation="4dp"
+                android:layout_marginTop="16dp" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

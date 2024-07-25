@@ -73,7 +73,7 @@ public class ViewProfileActivity extends AppCompatActivity {
             @Override
             public void onEvent(DocumentSnapshot documentSnapshot, FirebaseFirestoreException e) {
                 if (e != null) {
-                    Toast.makeText(ViewProfileActivity.this, "Failed to fetch worker details.", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(ViewProfileActivity.this, "Failed to fetch worker details.", Toast.LENGTH_SHORT).show();
                     Log.e(TAG, "Error fetching worker details: ", e);
                     return;
                 }

@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:title="Update Profile"
+        app:title="Your Profile"
         app:navigationIcon="@drawable/ic_backarrow"/>
 
     <!-- Profile Picture -->

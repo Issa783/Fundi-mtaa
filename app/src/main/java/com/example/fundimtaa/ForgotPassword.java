@@ -14,7 +14,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
-
 import com.google.android.material.button.MaterialButton;
 
 public class ForgotPassword extends AppCompatActivity {
@@ -28,6 +27,7 @@ public class ForgotPassword extends AppCompatActivity {
 
         editTextEmail = findViewById(R.id.editTextEmail);
         buttonResetPassword = findViewById(R.id.buttonResetPassword);
+
         // Inside onCreate method of ForgotPassword activity
         Button buttonBack = findViewById(R.id.buttonBack);
         buttonBack.setOnClickListener(new View.OnClickListener() {
@@ -39,7 +39,6 @@ public class ForgotPassword extends AppCompatActivity {
                 finish(); // Finish the current activity
             }
         });
-
 
         buttonResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,6 +56,8 @@ public class ForgotPassword extends AppCompatActivity {
                                     if (task.isSuccessful()) {
                                         // Password reset email sent successfully
                                         Toast.makeText(ForgotPassword.this, "Password reset email sent. Please check your email.", Toast.LENGTH_SHORT).show();
+                                        // Clear the email input field
+                                        editTextEmail.setText("");
                                     } else {
                                         // Failed to send password reset email
                                         Toast.makeText(ForgotPassword.this, "Failed to send password reset email. Please try again later.", Toast.LENGTH_SHORT).show();
@@ -70,7 +71,6 @@ public class ForgotPassword extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     // Function to validate email

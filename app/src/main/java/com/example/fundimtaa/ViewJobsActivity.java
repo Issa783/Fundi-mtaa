@@ -21,6 +21,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import android.app.AlertDialog;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -189,8 +191,19 @@ public class ViewJobsActivity extends AppCompatActivity {
 
 
             holder.buttonDelete.setOnClickListener(v -> {
-                deleteJob(job);
+                // Show confirmation dialog
+                new AlertDialog.Builder(ViewJobsActivity.this)
+                        .setTitle("Delete Job")
+                        .setMessage("Are you sure you want to delete this job?")
+                        .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                            // Delete job if user confirms
+                            deleteJob(job);
+                        })
+                        .setNegativeButton(android.R.string.no, null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
             });
+
 
             holder.buttonViewWorkers.setOnClickListener(v -> {
                 String jobId = job.getJobId();

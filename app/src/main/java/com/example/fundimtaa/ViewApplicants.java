@@ -739,15 +739,17 @@ public class ViewApplicants extends AppCompatActivity {
                                             .addOnSuccessListener(documentReference -> {
                                                 Log.d("RejectedJobs", "Rejected job ID: " + documentReference.getId());
 
-                                                // Remove job from AssignedJobs collection
-                                                documentSnapshot.getReference().delete()
-                                                        .addOnSuccessListener(aVoid2 -> {
-                                                            Log.d("AssignedJobs", "Job removed from assigned jobs collection");
+                                                // Remove job from WorkersJobHistory collection
+                                                db.collection("WorkersJobHistory")
+                                                        .document(jobId)
+                                                        .delete()
+                                                        .addOnSuccessListener(aVoid3 -> {
+                                                            Log.d("WorkersJobHistory", "Job removed from worker's job history collection");
                                                             Toast.makeText(ViewApplicants.this, "Job canceled and removed successfully", Toast.LENGTH_SHORT).show();
                                                         })
                                                         .addOnFailureListener(e -> {
-                                                            Log.e("AssignedJobs", "Failed to remove job from assigned jobs", e);
-                                                            Toast.makeText(ViewApplicants.this, "Error removing job from assigned jobs: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                            Log.e("WorkersJobHistory", "Failed to remove job from worker's job history: " + e.getMessage());
+                                                            Toast.makeText(ViewApplicants.this, "Error removing job from worker's job history: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                                                         });
                                             })
                                             .addOnFailureListener(e -> {
@@ -796,6 +798,8 @@ public class ViewApplicants extends AppCompatActivity {
                     Toast.makeText(ViewApplicants.this, "Error retrieving job details: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
+
+
 
 
     private void saveAssignmentState(boolean isAssigned) {

@@ -3,7 +3,10 @@ package com.example.fundimtaa;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,6 +25,7 @@ public class AdminLoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore mFirestore;
     private String selectedRole;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +33,7 @@ public class AdminLoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mFirestore = FirebaseFirestore.getInstance();
         selectedRole = getIntent().getStringExtra("ROLE");
+
         // Find the Login Button in LoginActivity
         Button buttonLogin = findViewById(R.id.buttonLogin);
 
@@ -45,6 +50,12 @@ public class AdminLoginActivity extends AppCompatActivity {
                 // Check if email and password are empty
                 if (email.isEmpty() || password.isEmpty()) {
                     Toast.makeText(AdminLoginActivity.this, "Please enter email and password", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // Check for network connectivity
+                if (!isNetworkConnected()) {
+                    Toast.makeText(AdminLoginActivity.this, "No internet connection. Please check your network settings.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -91,11 +102,23 @@ public class AdminLoginActivity extends AppCompatActivity {
                                             });
                                 } else {
                                     // If sign in fails, display a message to the user.
-                                    Toast.makeText(AdminLoginActivity.this, "Authentication failed. Email or password is incorrect.", Toast.LENGTH_SHORT).show();
+                                    String errorMessage = "Authentication failed.";
+                                    try {
+                                        throw task.getException();
+                                    } catch (Exception e) {
+                                        errorMessage = "Authentication failed. Email or password is incorrect.";
+                                    }
+                                    Toast.makeText(AdminLoginActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
             }
         });
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnected();
     }
 }

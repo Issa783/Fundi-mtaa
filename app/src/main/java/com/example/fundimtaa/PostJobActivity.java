@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -25,11 +26,14 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PostJobActivity extends AppCompatActivity {
 
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
+    private Calendar calendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,7 @@ public class PostJobActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         // Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
+        calendar = Calendar.getInstance();
 
         // Find EditText fields and Post Job Button
         EditText editTextJobName = findViewById(R.id.editTextJobName);
@@ -76,9 +81,40 @@ public class PostJobActivity extends AppCompatActivity {
         String location = editTextLocation.getText().toString().trim();
         String price = editTextPrice.getText().toString().trim();
 
-        // Check if all fields are filled
-        if (jobName.isEmpty() || jobStartDate.isEmpty() || jobDescription.isEmpty() || minExperience.isEmpty()) {
-            Toast.makeText(PostJobActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+        // Validate job details
+        if (!isValidName(jobName)) {
+            editTextJobName.setError("Job name must be at least 3 characters long");
+            editTextJobName.requestFocus();
+            return;
+        }
+
+        if (!isValidDate(jobStartDate)) {
+            editTextJobStartDate.setError("Job start date cannot be in the past");
+            editTextJobStartDate.requestFocus();
+            return;
+        }
+
+        if (!isValidDescription(jobDescription)) {
+            editTextJobDescription.setError("Job description must be at least 10 characters long");
+            editTextJobDescription.requestFocus();
+            return;
+        }
+
+        if (!isValidExperience(minExperience)) {
+            editTextMinExperience.setError("Minimum experience should be in the format 'x years'");
+            editTextMinExperience.requestFocus();
+            return;
+        }
+
+        if (!isValidLocation(location)) {
+            editTextLocation.setError("Location should be in the format 'City, Street/Area'");
+            editTextLocation.requestFocus();
+            return;
+        }
+
+        if (!isValidPrice(price)) {
+            editTextPrice.setError("Price should be in the format 'Ksh xxxx'");
+            editTextPrice.requestFocus();
             return;
         }
 
@@ -155,7 +191,6 @@ public class PostJobActivity extends AppCompatActivity {
 
     private void showDatePickerDialog(final EditText editText) {
         // Get current date to set as default in the DatePickerDialog
-        final Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
@@ -173,7 +208,66 @@ public class PostJobActivity extends AppCompatActivity {
                     editText.setText(selectedDate);
                 }, year, month, dayOfMonth);
 
+        // Set the minimum date to today
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+
         // Show DatePickerDialog
         datePickerDialog.show();
+    }
+
+    private boolean isValidName(String name) {
+        return name.length() >= 3;
+    }
+
+    private boolean isValidDate(String dateStr) {
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+            dateFormat.setLenient(false);
+
+            // Parse the selected date
+            Calendar selectedDate = Calendar.getInstance();
+            selectedDate.setTime(dateFormat.parse(dateStr));
+
+            // Set the time components of the selected date to zero
+            selectedDate.set(Calendar.HOUR_OF_DAY, 0);
+            selectedDate.set(Calendar.MINUTE, 0);
+            selectedDate.set(Calendar.SECOND, 0);
+            selectedDate.set(Calendar.MILLISECOND, 0);
+
+            // Get the current date and set its time components to zero
+            Calendar currentDate = Calendar.getInstance();
+            currentDate.set(Calendar.HOUR_OF_DAY, 0);
+            currentDate.set(Calendar.MINUTE, 0);
+            currentDate.set(Calendar.SECOND, 0);
+            currentDate.set(Calendar.MILLISECOND, 0);
+
+            // Compare selected date with current date
+            return !selectedDate.before(currentDate);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    private boolean isValidDescription(String description) {
+        return description.length() >= 10;
+    }
+
+    private boolean isValidExperience(String experience) {
+        Pattern pattern = Pattern.compile("^(\\d+\\s*years?)$");
+        Matcher matcher = pattern.matcher(experience);
+        return matcher.matches();
+    }
+
+    private boolean isValidLocation(String location) {
+        // Define a pattern for a valid location
+        Pattern pattern = Pattern.compile("^[A-Za-z]+(,\\s*[A-Za-z0-9\\s]+)*$");
+        Matcher matcher = pattern.matcher(location);
+        return matcher.matches();
+    }
+
+    private boolean isValidPrice(String price) {
+        Pattern pattern = Pattern.compile("^Ksh\\s*(\\d+)$");
+        Matcher matcher = pattern.matcher(price);
+        return matcher.matches();
     }
 }

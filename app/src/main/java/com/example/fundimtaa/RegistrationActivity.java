@@ -2,6 +2,7 @@ package com.example.fundimtaa;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,13 +49,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 String confirmPassword = editTextConfirmPassword.getText().toString().trim();
                 String phoneNumber = editTextPhoneNumber.getText().toString().trim();
 
-                if (name.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || phoneNumber.isEmpty()) {
-                    Toast.makeText(RegistrationActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (!password.equals(confirmPassword)) {
-                    Toast.makeText(RegistrationActivity.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+                if (!validateFields(name, email, password, confirmPassword, phoneNumber, radioGroupRole)) {
                     return;
                 }
 
@@ -112,4 +107,39 @@ public class RegistrationActivity extends AppCompatActivity {
             }
         });
     }
+
+    private boolean validateFields(String name, String email, String password, String confirmPassword, String phoneNumber, RadioGroup radioGroupRole) {
+        if (name.isEmpty() || name.length() < 3) {
+            Toast.makeText(this, "Name must be at least 3 characters long", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            Toast.makeText(this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (password.isEmpty() || password.length() < 6) {
+            Toast.makeText(this, "Password must be at least 6 characters long", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (!password.equals(confirmPassword)) {
+            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (phoneNumber.isEmpty() || phoneNumber.length() != 10 || !Patterns.PHONE.matcher(phoneNumber).matches()) {
+            Toast.makeText(this, "Please enter a valid 10-digit phone number", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (radioGroupRole.getCheckedRadioButtonId() == -1) {
+            Toast.makeText(this, "Please select a role", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
+    }
+
 }

@@ -29,6 +29,8 @@ import com.google.firebase.storage.UploadTask;
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ClientActivity extends AppCompatActivity {
 
@@ -94,8 +96,10 @@ public class ClientActivity extends AppCompatActivity {
                 String about = editTextAbout.getText().toString().trim();
                 String location = editTextLocation.getText().toString().trim();
 
-                if (about.isEmpty() || location.isEmpty()) {
-                    Toast.makeText(ClientActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                // Validate fields
+                String validationError = validateFields(about, location);
+                if (validationError != null) {
+                    Toast.makeText(ClientActivity.this, validationError, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -108,6 +112,25 @@ public class ClientActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private String validateFields(String about, String location) {
+        if (about.isEmpty() || about.length() < 10) {
+            return "The 'About' field must be at least 10 characters long.";
+        }
+
+        if (location.isEmpty() || !isValidLocation(location)) {
+            return "The 'Location' field must include city and area/street, separated by a comma.";
+        }
+
+        return null; // No errors
+    }
+
+    private boolean isValidLocation(String location) {
+        // Define a pattern for a valid location
+        Pattern pattern = Pattern.compile("^[A-Za-z]+(,\\s*[A-Za-z0-9\\s]+)*$");
+        Matcher matcher = pattern.matcher(location);
+        return matcher.matches();
     }
 
     private Bitmap resizeImage(Bitmap bitmap, int maxWidth, int maxHeight) {

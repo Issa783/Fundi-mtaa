@@ -1,10 +1,9 @@
 package com.example.fundimtaa;
 
-
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -31,6 +31,8 @@ import okhttp3.Response;
 import okhttp3.MediaType;
 
 import java.io.IOException;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 public class ApplyJobActivity extends AppCompatActivity {
 
@@ -51,7 +53,6 @@ public class ApplyJobActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_apply_job);
         jobId = getIntent().getStringExtra("jobId");
-        // Log the job ID received from Intent extras
         Log.d("ApplyJobActivity", "Received Job ID: " + jobId);
         jobName = getIntent().getStringExtra("jobName");
         Log.d("ApplyJobActivity", "Received Job Name: " + jobName);
@@ -82,10 +83,22 @@ public class ApplyJobActivity extends AppCompatActivity {
                 String location = editTextLocation.getText().toString().trim();
                 String experience = editTextExperience.getText().toString().trim();
 
-                if (name.isEmpty() || date.isEmpty() || experience.isEmpty() || phoneNumber.isEmpty() || location.isEmpty()) {
-                    Toast.makeText(ApplyJobActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                if (!isValidName(name)) {
+                    editTextName.setError("Name must be at least 3 characters long");
+                    editTextName.requestFocus();
+                } else if (!isValidDate(date)) {
+                    editTextDate.setError("Date must be today or in the future");
+                    editTextDate.requestFocus();
+                } else if (!isValidExperience(experience)) {
+                    editTextExperience.setError("Experience must be in the format 'x years' or 'x year'");
+                    editTextExperience.requestFocus();
+                } else if (!isValidLocation(location)) {
+                    editTextLocation.setError("Location should be in the format 'City, Street/Area'");
+                    editTextLocation.requestFocus();
+                } else if (!isValidPhoneNumber(phoneNumber)) {
+                    editTextPhoneNumber.setError("Phone number must be exactly 10 digits");
+                    editTextPhoneNumber.requestFocus();
                 } else {
-                    // Save details to the database and send notification
                     saveJobApplication(name, date, phoneNumber, location, experience);
                 }
             }
@@ -112,7 +125,50 @@ public class ApplyJobActivity extends AppCompatActivity {
                     }
                 }, year, month, dayOfMonth);
 
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
         datePickerDialog.show();
+    }
+
+    private boolean isValidName(String name) {
+        return name.length() >= 3; // Adjust the minimum length as needed
+    }
+
+    private boolean isValidDate(String date) {
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+            dateFormat.setLenient(false);
+            Calendar selectedDate = Calendar.getInstance();
+            selectedDate.setTime(dateFormat.parse(date));
+            selectedDate.set(Calendar.HOUR_OF_DAY, 0);
+            selectedDate.set(Calendar.MINUTE, 0);
+            selectedDate.set(Calendar.SECOND, 0);
+            selectedDate.set(Calendar.MILLISECOND, 0);
+
+            Calendar currentDate = Calendar.getInstance();
+            currentDate.set(Calendar.HOUR_OF_DAY, 0);
+            currentDate.set(Calendar.MINUTE, 0);
+            currentDate.set(Calendar.SECOND, 0);
+            currentDate.set(Calendar.MILLISECOND, 0);
+
+            return !selectedDate.before(currentDate);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    private boolean isValidExperience(String experience) {
+        return Pattern.matches("\\d+\\s+years?", experience.toLowerCase());
+    }
+
+    private boolean isValidLocation(String location) {
+        // Define a pattern for a valid location
+        Pattern pattern = Pattern.compile("^[A-Za-z]+(,\\s*[A-Za-z0-9\\s]+)*$");
+        Matcher matcher = pattern.matcher(location);
+        return matcher.matches();
+    }
+
+    private boolean isValidPhoneNumber(String phoneNumber) {
+        return phoneNumber.length() == 10 && phoneNumber.matches("\\d+");
     }
 
     private void saveJobApplication(String name, String date, String phoneNumber, String location, String experience) {
@@ -152,6 +208,7 @@ public class ApplyJobActivity extends AppCompatActivity {
                                         Toast.makeText(ApplyJobActivity.this, "Application submitted successfully", Toast.LENGTH_SHORT).show();
                                         clearFields();
                                         fetchClientIdAndNotify(workerId, jobId, jobName);
+                                        navigateToPreviousPage();
                                     })
                                     .addOnFailureListener(e -> {
                                         Toast.makeText(ApplyJobActivity.this, "Failed to submit application: " + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -163,7 +220,6 @@ public class ApplyJobActivity extends AppCompatActivity {
                 });
     }
 
-
     private void clearFields() {
         editTextName.setText("");
         editTextDate.setText("");
@@ -171,6 +227,7 @@ public class ApplyJobActivity extends AppCompatActivity {
         editTextLocation.setText("");
         editTextExperience.setText("");
     }
+
     private void fetchClientIdAndNotify(String workerId, String jobId, String jobName) {
         db.collection("jobs")
                 .document(jobId)
@@ -191,6 +248,7 @@ public class ApplyJobActivity extends AppCompatActivity {
                     Log.e("NotifyJobApplication", "Failed to fetch job document: " + e.getMessage());
                 });
     }
+
     private void notifyJobApplication(String workerId, String jobId, String jobName, String clientId) {
         Log.d("NotifyJobApplication", "clientId: " + clientId);
         Log.d("NotifyJobApplication", "workerId: " + workerId);
@@ -201,38 +259,34 @@ public class ApplyJobActivity extends AppCompatActivity {
         MediaType JSON = MediaType.get("application/json; charset=utf-8");
         String jsonBody = "{\"clientId\":\"" + clientId + "\", \"workerId\":\"" + workerId + "\", \"jobId\":\"" + jobId + "\", \"jobName\":\"" + jobName + "\"}";
         RequestBody body = RequestBody.create(jsonBody, JSON);
+
+        String url = "https://notify-1-wk1o.onrender.com/notify-job-application";
         Request request = new Request.Builder()
-                .url("https://notify-1-wk1o.onrender.com/notify-job-application")
+                .url(url)
                 .post(body)
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-                runOnUiThread(() -> {
-                    Log.e("NotifyJobApplication", "Notification failed: " + e.getMessage());
-                    Toast.makeText(ApplyJobActivity.this, "Notification failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                });
+                Log.e("NotifyJobApplication", "Failed to send notification: " + e.getMessage());
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    runOnUiThread(() -> {
-                        Log.d("NotifyJobApplication", "Notification sent successfully");
-                        Toast.makeText(ApplyJobActivity.this, "Notification sent successfully", Toast.LENGTH_SHORT).show();
-                    });
+                if (!response.isSuccessful()) {
+                    Log.e("NotifyJobApplication", "Unexpected code " + response);
                 } else {
-                    runOnUiThread(() -> {
-                        Log.e("NotifyJobApplication", "Notification failed: " + response.message());
-                        Toast.makeText(ApplyJobActivity.this, "Notification failed: " + response.message(), Toast.LENGTH_SHORT).show();
-                    });
+                    Log.d("NotifyJobApplication", "Notification sent successfully");
                 }
-                response.close(); // Always close the response
             }
         });
     }
 
-
+    private void navigateToPreviousPage() {
+        Intent intent = new Intent(ApplyJobActivity.this, WorkerViewJobs.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+    }
 }

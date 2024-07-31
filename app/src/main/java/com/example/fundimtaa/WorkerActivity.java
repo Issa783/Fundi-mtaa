@@ -78,8 +78,7 @@ public class WorkerActivity extends AppCompatActivity {
                 String location = editTextLocation.getText().toString().trim();
                 String specialization = editTextSpecialization.getText().toString().trim();
 
-                if (about.isEmpty() || experience.isEmpty() || location.isEmpty() || specialization.isEmpty()) {
-                    Toast.makeText(WorkerActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                if (!validateFields(about, experience, location, specialization)) {
                     return;
                 }
 
@@ -163,7 +162,6 @@ public class WorkerActivity extends AppCompatActivity {
                         Toast.makeText(WorkerActivity.this, "Failed to upload image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
-
     }
 
     private void saveWorkerData(String userId, String about, String experience, String location, String specialization, String imageUrl) {
@@ -193,5 +191,29 @@ public class WorkerActivity extends AppCompatActivity {
                         Toast.makeText(WorkerActivity.this, "Failed to store additional data in Firestore: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    private boolean validateFields(String about, String experience, String location, String specialization) {
+        if (about.isEmpty() || about.length() < 10) {
+            Toast.makeText(this, "About field must be at least 10 characters long", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (experience.isEmpty() || !experience.matches("\\d+\\s+years")) {
+            Toast.makeText(this, "Experience must be in the format '3 years', '2 years', etc.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (location.isEmpty() || !location.contains(", ")) {
+            Toast.makeText(this, "Location must include city and area/street, separated by a comma", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (specialization.isEmpty()) {
+            Toast.makeText(this, "Specialization is required", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
     }
 }
